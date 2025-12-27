@@ -1,0 +1,80 @@
+[tool.poetry]
+name = "secret-santa-app"
+version = "0.1.0"
+description = "Simple secret santa application"
+authors = ["Ariel Acosta <jariel17@users.noreply.github.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/jariel17/secret-santa-app"
+repository = "https://github.com/jariel17/secret-santa-app"
+packages = [
+    { include = "app" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.110.0"
+uvicorn = {version = "^0.29.0", extras = ["standard"]}
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6.9,<1.0.0"
+]
+
+# -----------------------------
+# Ruff configuration (lint + format)
+# -----------------------------
+[tool.ruff]
+target-version = "py311"  # Match your pyproject.toml: python = "^3.11"
+line-length = 100
+src = ["app"]  # Tell Ruff where your source code lives
+
+exclude = [
+  ".venv",
+  "venv",
+  "build",
+  "dist",
+  ".mypy_cache",
+  ".pytest_cache",
+  ".ruff_cache",
+  ".git",
+  "__pycache__",
+  "*.pyi",  # stub files, if any
+]
+
+[tool.ruff.lint]
+# Enable robust, modern rule sets
+select = [
+  "E",    # pycodestyle
+  "F",    # pyflakes
+  "I",    # isort
+  "UP",   # pyupgrade (e.g. f-strings, modern syntax)
+  "B",    # bugbear
+  "W",    # warnings
+  "C4",   # flake8-comprehensions (better list/dict/set comprehensions)
+  "SIM",  # simplify code (e.g. unnecessary else, redundant conditions)
+  "RUF",  # Ruff-specific rules (like RUF013 for unsafe `assert`)
+]
+ignore = [
+  "E501",  # Line length handled by formatter
+  "B008",  # Avoid false positives on FastAPI dependency injection (e.g. `def get_db(db: Session = Depends(...))`)
+]
+
+[tool.ruff.lint.isort]
+# Since your app is named "secret-santa-app", but the Python package is likely `app`
+known-first-party = ["app"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
