@@ -18,8 +18,8 @@ uvicorn = {version = "^0.29.0", extras = ["standard"]}
 pydantic = "^2.12.5"
 
 [tool.poetry.scripts]
-dev = "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
-start = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+dev = "scripts.dev:main"
+start = "scripts.start:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0"]
