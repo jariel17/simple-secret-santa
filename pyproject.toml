@@ -15,14 +15,28 @@ packages = [
 python = "^3.11"
 fastapi = "^0.110.0"
 uvicorn = {version = "^0.29.0", extras = ["standard"]}
+pydantic = "^2.12.5"
+
+[tool.poetry.scripts]
+dev = "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+start = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
 [build-system]
 requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+
 [dependency-groups]
 dev = [
-    "ruff>=0.6.9,<1.0.0"
+    "ruff>=0.6.9,<1.0.0",
+    "pytest (>=9.0.2,<10.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
 ]
 
 # -----------------------------
